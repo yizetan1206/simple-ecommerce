@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %} ORDERS LIST {% endblock %}
+
+{% block linkcss %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'cart.css' %}"> 
+{% endblock %}
+
+{% block content %}
+
+<div class="cart-page">
+    <h2>Pending Orders</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Order_ID</th>
+                <th>Products and Quantity</th>
+                <th>Total</th>
+                <th>User Details</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>
+                    {% for product in order.cart_items %}
+                        {% if product.order_id == order.id %}
+                        {{ product.product.parent.name }}{{ product.product.id }}&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;{{ product.quantity }}<br>
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                <td>RM {{ order.total_amount }}</td>
+                <td>Name: {{ order.user.last_name }} {{ order.user.first_name }}<br>Phone: {{ order.userd.phone_number}} </td>
+                <td>{{ order.status }}</td>
+                <td>
+                    {% if order.status == 'Pending' %}
+                        <a href="{% url 'accept_order' %}?id={{ order.id }}" class="accept">Accept</a>
+                        <a href="{% url 'decline_order' %}?id={{ order.id }}" class="decline">Decline</a>
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+
+
+<br><br><br>
+<div class="ordered-items">
+    <h2>Accepted Order</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Order_ID</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Check Done</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in histories %}
+            <tr>
+                <!-- CAN ADD ONE MORE TO VIEW ORDER DETAILSSSS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+                <td>{{ order.id }}</td>
+                <td>{{ order.total_amount }}</td>
+                <td>{{ order.status }}</td>
+                {% if order.status == 'Accepted' %}
+                <td><a href="{% url 'done_order' %}?id={{ order.id }}" class="decline">Done</a></td>
+                {% elif order.status == 'Done' %}
+                <td>ORDER FINISHED</td>
+                {% else %}
+                <td>order declined or cancelled</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

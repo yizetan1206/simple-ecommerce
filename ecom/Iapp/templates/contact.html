@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %} CONTACT {% endblock %}
+
+{% block linkcss %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'contact.css' %}"> 
+{% endblock %}
+
+{% block content %}
+
+<section id="contact">
+    <h2>Contact Us</h2>
+    <p>Feel free to reach out to us using the contact information below:</p>
+    
+    <div class="contact-info">
+        <p>Email: ifourengineering@gmail.com</p>
+        <p>Phone: +60 16-558 0118</p>
+        <!-- Add more contact information as needed -->
+    </div>
+
+    <div class="contact-form-container">
+        <!-- Add a contact form if desired -->
+        <form action="{% url 'contact' %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit</button>
+        </form>
+
+
+        <img src="../static/images/1.jpg" alt="Photo 1">
+        <img src="../static/images/2.jpg" alt="Photo 2">
+    </div>
+</section>
+
+
+{% endblock %}

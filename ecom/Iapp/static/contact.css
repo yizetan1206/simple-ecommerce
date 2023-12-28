@@ -1,0 +1,87 @@
+/* Add these styles to your existing base.css or create a new contact.css */
+
+/* Styles for the contact section */
+#contact {
+    padding: 20px;
+}
+
+#contact h2 {
+    color: #333;
+}
+
+.contact-info {
+    margin-top: 20px;
+}
+
+.contact-info p {
+    margin-bottom: 10px;
+}
+
+/* Styles for the contact form */
+form {
+    margin-top: 20px;
+    max-width: 400px; /* Adjust the max-width as needed */
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+form input,
+form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+form button {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #555;
+}
+
+
+
+.contact-form-container {
+    display: flex;
+    justify-content: space-between; /* Align items to left and right */
+    align-items: center;
+}
+
+/* Adjust the styles for the photos as needed */
+.contact-form-container img {
+    width: 430px; /* Adjust the width as per your design */
+    height: auto; /* Maintain aspect ratio */
+}
+
+/* Adjust styles for the form container */
+.contact-form-container form {
+    width: 60%; /* Adjust the width as per your design */
+}
+
+/* Add responsive styles if necessary */
+@media screen and (max-width: 600px) {
+    .contact-form-container {
+        flex-direction: column;
+        align-items: flex-start; /* Align items to the start for smaller screens */
+    }
+
+    /* Adjust styles for individual elements as needed */
+    .contact-form-container img {
+        margin-bottom: 10px; /* Add margin between photos and form for smaller screens */
+    }
+
+    .contact-form-container form {
+        width: 100%; /* Full width for smaller screens */
+    }
+}

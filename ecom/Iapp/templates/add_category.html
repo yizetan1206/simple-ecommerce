@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %} ADD NEW {% endblock %}
+
+{% block linkcss %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'add_new.css' %}"> 
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2>Add New Category</h2>
+        <form method="post" action="{% url 'add_category' %}">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+            
+            <!-- Add more fields as needed based on your model -->
+
+            <button type="submit">Add Category</button>
+        </form>
+    </div>
+{% endblock %}

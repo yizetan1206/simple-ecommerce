@@ -1,0 +1,89 @@
+/* Additional styles for the cart page */
+.cart-page{
+    margin: 20px;
+}
+
+.ordered-items{
+    margin: 20px;
+}
+
+.ordered-items a{
+    background-color: #cecece; /* Red background color */
+    color: #000000; /* White text color */
+    border: none;
+    width: 80px;
+    border-radius: 10px;
+    padding: 8px 8px;
+    font-size: 13px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.ordered-items a:hover{
+    background-color: #868686;
+}
+
+.cart-page a{
+    background-color: #cecece; /* Red background color */
+    color: #000000; /* White text color */
+    border: none;
+    width: 80px;
+    border-radius: 10px;
+    padding: 8px 8px;
+    font-size: 13px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.cart-page a:hover{
+    background-color: #868686;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #333;
+    color: #fff;
+}
+
+/* Add more styles as needed */
+.place-order a{
+    font-size: large;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.place-order button{
+    background-color: #4caf50;
+    color: #fff;
+    padding: 5px 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.place-order button:disabled,
+button[disabled],
+button[disabled]:hover{
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+}
+
+.messages li{
+    color: red;
+    text-align: center;
+}

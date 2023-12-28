@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Success{% endblock %}
+
+{% block linkcss %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'success.css' %}"> 
+{% endblock %}
+
+{% block content %}
+    <section id="success">
+        <h2>Sorry Invalid OTP</h2>
+        <p>Please register again</p>
+        <a href="{% url 'register' %}">Back to Register</a>
+    </section>
+{% endblock %}

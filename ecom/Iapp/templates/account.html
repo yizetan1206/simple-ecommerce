@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %} ACCOUNT {% endblock %}
+
+{% block linkcss %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'account.css' %}"> 
+{% endblock %}
+
+{% block content %}
+<section class="account-page">
+    <h1>Welcome, {{ user.username }}</h1>
+    <div class="user-profile">
+        <img src="../static/images/6596121.png" alt="User Avatar" class="avatar">  
+        <div class="user-details">
+            <p>Email: {{ user.email }}</p>
+            <p>Joined {{ user.date_joined|date:"M d, Y" }}</p>
+            <br><br>
+            <h4>Address: </h4>
+            <p>{{ info.address_line1 }}, {{ info.address_line2 }}, </p>
+            <p>{{ info.city }}, {{ info.postal_code }}, </p>
+            <p>{{ info.country }}</p>
+            <br>
+            <h4>Phone Number: </h4>
+            <p>{{ info.phone_number }}</p>
+            <!-- Add more user details as needed -->
+            <br>
+            <a href="{% url 'modify_account' %}" class="edit-button">Edit Information</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

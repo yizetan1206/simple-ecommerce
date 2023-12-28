@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %} HOMEPAGE {% endblock %}
+
+{% block linkcss %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'home.css' %}"> 
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<!-- Include jQuery UI -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="search-container">
+    <form action="/search" method="get">
+        <input type="text" id='search-input' name="q" value="{{ request.GET.q }}" placeholder="Search..." />
+        <button type="submit" value="Search"> Search</button>
+    </form>
+</div>
+
+<script>
+    $(function() {
+        $("#search-input").autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: "/autocomplete/",
+                    dataType: "json",
+                    data: {
+                        q: request.term
+                    },
+                    success: function(data) {
+                        response(data.suggestions);
+                    }
+                });
+            },
+            minLength: 2,
+            select: function(event, ui) {
+                // Fill the input with the selected value
+                $("#search-input").val(ui.item.value);
+                
+                // Optionally, you can trigger another event or action here
+            }
+        });
+    });
+</script>
+<div class="add-product-button">
+    {% if user.is_superuser %}
+<a href="{% url 'add_product' %}">Add New Product</a>
+<a href="{% url 'add_category' %}">Add New Category</a>
+{% endif %}
+</div>
+
+<div class="product-container">
+    {% for product in products %}
+        <div class="product">
+            <div class="align">
+            <div class="product-image">
+            {% for image in images %}
+                {% if image.product_id == product.id %}
+                    <img src="../media/{{image.image}}" alt="{{ product.name }}">
+                    {% endif %}
+            {% endfor %}
+            </div>
+        </div>
+            <h3>{{ product.name }}</h3>
+            <!-- {% if product.quantity == 0 %}
+            <p class="out-of-stock">TEMPORARILY OUT OF STOCK</p>
+            {% endif %} -->
+            <a href="{% url 'product_detail' %}?id={{product.id}}" class="product-link">View Details</a>
+            {% if user.is_superuser %}
+            <a href="{% url 'delete_product' product_id=product.id %}" class="delete-product-button" >Delete Product</a>
+            {% endif %}
+        </div>
+        {% if forloop.counter|divisibleby:3 %}
+            <div class="clearfix"></div>
+        {% endif %}
+    {% endfor %}
+</div>
+
+{% endblock %}

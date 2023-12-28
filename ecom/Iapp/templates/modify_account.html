@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %} ACCOUNT {% endblock %}
+
+{% block linkcss %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'account.css' %}"> 
+{% endblock %}
+
+
+{% block content %}
+<section class="account-page">
+    <h1>Welcome, {{ user.username }}</h1>
+    <div class="user-profile">
+        <img src="../static/images/6596121.png" alt="User Avatar" class="avatar">  
+        <div class="user-details">
+            <p>Email: {{ user.email }}</p>
+            <p>Joined {{ user.date_joined|date:"M d, Y" }}</p>
+        </div>
+    </div>
+</section>
+<div class="modify-container">
+<form method="post" action="{% url 'modify_account' %}">
+    {% csrf_token %}
+
+    {{ address_form.as_p }}
+
+    <button type="submit">Submit</button>
+</form>
+</div>
+{% endblock %}

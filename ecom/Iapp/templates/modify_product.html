@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %} MODIFY PRODUCT {% endblock %}
+
+{% block linkcss %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'add_new.css' %}"> 
+{% endblock %}
+
+{% block content %}
+<section class="modify-product-page">
+  <h1>Modify Product</h1>
+  <div class="container">
+      <div class="product-form">
+          <form method="post" action="{% url 'modify_product' %}?id={{product.id}}">
+              {% csrf_token %}
+              
+              {{ product_form.as_p }}
+
+              {{ variation_formset.management_form }}
+              <div id="variations-formset">
+                  {% for variation_form in variation_formset %}
+                      {{ variation_form.as_p }}
+                      <script>
+                        document.getElementById("{{ variation_form.id.id_for_label }}").readOnly = true;
+                      </script>
+                  {% endfor %}
+              </div>
+              <button type="submit">Save</button>
+          </form>
+      </div>
+  </div>
+</section>
+
+
+
+{% endblock %}

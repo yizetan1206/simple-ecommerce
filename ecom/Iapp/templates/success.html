@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Success{% endblock %}
+
+{% block linkcss %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'success.css' %}"> 
+{% endblock %}
+
+{% block content %}
+    <section id="success">
+        <h2>Thank you for your feedback!</h2>
+        <p>Your message has been received, and we will get back to you soon.</p>
+        <a href="{% url 'home' %}">Back to Homepage</a>
+    </section>
+{% endblock %}

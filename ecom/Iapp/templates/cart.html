@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title %} CART {% endblock %}
+
+{% block linkcss %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'cart.css' %}"> 
+{% endblock %}
+
+{% block content %}
+
+<div class="cart-page">
+    <h2>Your Shopping Cart</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart_items %}
+            <tr>
+                <td>{{ item.product.parent.name }}{{ item.product.id }}</td>
+                <td>
+                    <a href="{% url 'adjust_quantity' item_id=item.id %}?change=-1" class="btn-remove">-</a>
+                    <span class="quantity" data-item-id="{{ item.id }}">{{ item.quantity }}</span>
+                    <a href="{% url 'adjust_quantity' item_id=item.id %}?change=1" class="btn-add">+</a>
+                </td>
+                <td>RM {{ item.subtotal}}</td>
+                <td>
+                    <a href="{% url 'remove_from_cart' %}?id={{ item.id }}">Remove</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <div class="place-order">
+    {% if cart_items %}
+    <a href="{% url 'order_placed' %}">Place Order</a>
+    {% else %}
+    <button class="order" disabled>Place Order</button>
+    {% endif %}
+    </div>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+
+
+<br><br><br>
+<div class="ordered-items">
+    <h2>Ordered Items</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Order_ID</th>
+                <th>Products and Quantity</th>
+                <th>Total</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>
+                    {% for product in products %}
+                        {% if product.order_id == order.id %}
+                        {{ product.product.parent.name }}{{ product.product.id }}&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;{{ product.quantity }}<br>
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                <td>{{ order.total_amount }}</td>
+                <td>{{ order.status }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

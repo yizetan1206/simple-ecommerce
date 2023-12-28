@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Success{% endblock %}
+
+{% block linkcss %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'success.css' %}"> 
+{% endblock %}
+
+{% block content %}
+    <section id="success">
+        <h2>Thank you for your Order!</h2>
+        <p>Your oder has been placed, kindly wait for Seller to confirmed your order.</p>
+        <a href="{% url 'view_cart' %}">Back to Cart page</a>
+    </section>
+{% endblock %}

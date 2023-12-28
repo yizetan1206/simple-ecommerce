@@ -1,0 +1,30 @@
+/* Add these styles to your existing CSS file or create a new one */
+
+/* Styles for the success section */
+#success {
+    text-align: center;
+    padding: 20px;
+}
+
+#success h2 {
+    color: #333;
+}
+
+#success p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+#success a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+#success a:hover {
+    background-color: #555;
+}

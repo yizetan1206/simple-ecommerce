@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %} ADD NEW {% endblock %}
+
+{% block linkcss %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'add_new.css' %}"> 
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2>Add New Product</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <!-- Product Form -->
+            {{ form.as_p }}
+            
+            
+            <!-- Variation Formset -->
+            {{ variation_formset.management_form }}
+            <div id="variations-formset">
+              {% for variation_form in variation_formset %}
+                {{ variation_form.as_p }}
+              {% endfor %}
+            </div>
+            
+            <!-- Add/Remove Variation Forms Dynamically -->
+            <button type="button" id="add-variation">Add Variation</button>
+            <button type="button" id="remove-variation">Remove Last Variation</button>
+            
+            <!-- Image Upload -->
+            <label for="id_images">Images:</label>
+            <input required type="file" name="images" id="id_images" multiple>
+            
+            <button type="submit">Save</button>
+          </form>
+          <script>
+            document.addEventListener("DOMContentLoaded", function() {
+              var formset = document.getElementById('variations-formset');
+              var addBtn = document.getElementById('add-variation');
+              var removeBtn = document.getElementById('remove-variation');
+              var totalForms = document.getElementById('id_variations-TOTAL_FORMS');
+        
+              addBtn.addEventListener('click', function() {
+                var formCount = parseInt(totalForms.value);
+                var newForm = document.createElement('div');
+                newForm.innerHTML = document.getElementById('empty-form').innerHTML.replace(/__prefix__/g, formCount);
+                formset.appendChild(newForm);
+                totalForms.value = formCount + 1;
+        
+                // Enable remove button after adding a form
+                removeBtn.disabled = false;
+              });
+        
+              removeBtn.addEventListener('click', function() {
+                var forms = formset.children;
+                if (forms.length > 1) {
+                  formset.removeChild(forms[forms.length - 1]);
+                  totalForms.value = parseInt(totalForms.value) - 1;
+        
+                  // Disable remove button if only one form left
+                  if (forms.length === 4) {
+                    removeBtn.disabled = true;
+                  }
+                }
+              });
+        
+              // Disable remove button initially if only one form present
+              if (formset.children.length === 4) {
+                removeBtn.disabled = true;
+              }
+            });
+          </script>
+        
+          <!-- Empty form template for cloning -->
+          <div id="empty-form" style="display:none;">
+            {{ variation_formset.empty_form.as_p }}
+          </div>
+    
+{% endblock %}

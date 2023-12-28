@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+
+{% block title %} PRODUCT DETAIL {% endblock %}
+
+{% block linkcss %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'product_detail.css' %}"> 
+{% endblock %}
+
+
+{% block content %}
+    <div class="product-details">
+        <div class="align">
+        <div class="product-image">
+        {% for image in images %}
+        <img src="../media/{{image.image}}" alt="Product Image">
+        {% endfor %}
+        </div>
+    </div>
+        <h2>{{ parent.name }}</h2>
+        <p>{{ parent.description|linebreaksbr|safe }}</p>
+        <div class="container">
+        {% for product in products %}
+        <div class="small">
+        <h3>{{ product.id }}</h3>
+        <p>{{ product.features|linebreaksbr|safe }}</p>
+        <h4>RM {{ product.price }}</h4>
+        <h5>Stock left: {{ product.quantity }}</h5>
+
+        {% if product.quantity == 0 %}
+        <div>
+            <p class="out-of-stock">TEMPORARILY OUT OF STOCK</p>
+        </div>
+        <button class="add-to-cart-btn" disabled>Add to Cart</button>
+        {% else %}
+        <a href="{% url 'add_to_cart' %}?id={{ product.id }}">Add to Cart</a>
+        {% endif %}
+        </div>
+        {% if forloop.counter|divisibleby:2 %}
+        <div class="clearfix"></div>
+    {% endif %}
+        {% endfor %}
+    </div>
+        <br><br><br><br>
+        {% if user.is_superuser %}
+        <a href="{% url 'delete_product' product_id=parent.id %}" class="delete-product-button" >Delete Product</a>
+        <a href="{% url 'modify_product' %}?id={{ parent.id }}" class="delete-product-button">Edit Product</a>
+        {% endif %}
+    </div>
+{% endblock %}
